@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './contexts/AuthContext';
 
 // Pages
@@ -15,14 +14,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import LoadingScreen from './components/LoadingScreen';
 
 function App() {
-  const { isLoading, user } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!isLoading && user) {
-      navigate('/dashboard');
-    }
-  }, [isLoading, user, navigate]);
+  const { isLoading } = useAuth();
 
   if (isLoading) {
     return <LoadingScreen />;
@@ -36,10 +28,10 @@ function App() {
         
         <Route path="/" element={<ProtectedRoute />}>
           <Route index element={<Navigate to="/dashboard" replace />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/bookings" element={<BookingsPage />} />
-          <Route path="/guests" element={<GuestsPage />} />
-          <Route path="/statistics" element={<StatisticsPage />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="bookings" element={<BookingsPage />} />
+          <Route path="guests" element={<GuestsPage />} />
+          <Route path="statistics" element={<StatisticsPage />} />
         </Route>
         
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
